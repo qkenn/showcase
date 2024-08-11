@@ -1,0 +1,51 @@
+// reset
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+// custom font
+@font-face {
+  font-family: 'metropolitano';
+  src: url('./fonts/Metropolitano-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// variables
+$main-ff: 'metropolitano', sans-serif;
+$bg-clr: #12192b;
+
+// base
+body {
+  line-height: 1.7;
+  font-family: $main-ff;
+  background-color: $bg-clr;
+  color: #ffffff;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 3rem;
+
+  &__link {
+    color: inherit;
+    text-decoration: none;
+  }
+}
