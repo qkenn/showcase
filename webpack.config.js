@@ -7,19 +7,11 @@ process.env.NODE_ENV
   ? (process.env.NODE_ENV = process.env.NODE_ENV)
   : (process.env.NODE_ENV = 'production');
 
+// common cofiguration
 const commonConfig = {
   entry: {
     app: './src/main.js',
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'styles.css',
-      chunkFilename: '[id].css',
-    }),
-  ],
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -28,15 +20,6 @@ const commonConfig = {
   },
   module: {
     rules: [
-      {
-        test: /\.scss$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
-      },
       {
         test: /\.(?:js|mjs|cjs)$/,
         exclude: /node_modules/,
@@ -53,9 +36,20 @@ const commonConfig = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+  ],
 };
 
+// dev config
 if (process.env.NODE_ENV == 'development') {
+  commonConfig.module.rules.push({
+    test: /\.scss$/i,
+    use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+  });
+
   module.exports = {
     ...commonConfig,
     mode: 'development',
@@ -68,7 +62,25 @@ if (process.env.NODE_ENV == 'development') {
   };
 }
 
+// prod config
 if (process.env.NODE_ENV == 'production') {
+  commonConfig.plugins.push(
+    new MiniCssExtractPlugin({
+      filename: 'styles.css',
+      chunkFilename: '[id].css',
+    })
+  );
+
+  commonConfig.module.rules.push({
+    test: /\.scss$/i,
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+      'sass-loader',
+    ],
+  });
+
   module.exports = {
     ...commonConfig,
     mode: 'production',
