@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "export NODE_ENV=development && webpack serve --open",
-    "build": "export NODE_ENV=production && webpack",
+    "dev": "NODE_ENV=development webpack serve --open",
+    "build": "NODE_ENV=production webpack",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "author": "qkenn",

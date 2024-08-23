@@ -66,6 +66,7 @@ if (process.env.NODE_ENV == 'development') {
       static: './dist',
       watchFiles: ['./src/index.html'],
       hot: true,
+      port: 3000,
     },
   };
 }
